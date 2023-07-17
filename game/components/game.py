@@ -1,5 +1,4 @@
 import pygame
-from game.components.enemies.enemy import Enemy
 from game.components.enemies.enemy_manager import EnemyManager
 
 from game.components.spaceship import Spaceship
@@ -49,6 +48,7 @@ class Game:
         self.enemy_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
+
 
     def draw_background(self):
         image = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))

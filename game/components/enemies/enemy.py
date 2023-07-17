@@ -2,22 +2,22 @@ import random
 import pygame
 from pygame.sprite import Sprite
 
-from game.utils.constants import ENEMY_1, SCREEN_WIDTH
+from game.utils.constants import ENEMY_1, SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 LEFT = "left"
 RIGHT = "right"
 
 class Enemy(Sprite):
-    X_POST_LIST = [x_pos for x_pos in range (50, SCREEN_WIDTH, 50)]
+    X_POS_LIST = [x_pos for x_pos in range (50, SCREEN_WIDTH, 50)]
     Y_POS = 20
-    SPEED_X = 5
-    SPEED_Y = 1
+    SPEED_X = 6
+    SPEED_Y = 6
 
     def __init__(self):
-        self.image = pygame.transform.scalade(ENEMY_1, (50, 50))
+        self.image = pygame.transform.scale(ENEMY_1, (50, 50))
         self.rect = self.image.get_rect()
-        self.rect.x = random.choice(self.X_POST_LIST)
+        self.rect.x = random.choice(self.X_POS_LIST)
         self.rect.y = self.Y_POS
 
         self.speed_x = self.SPEED_X
@@ -34,7 +34,7 @@ class Enemy(Sprite):
             self.rect.x -= self.speed_x
 
         self.update_movement()
-        if self.rect.y >= SCREEN_WIDTH:
+        if self.rect.y >= SCREEN_HEIGHT:
             enemies.remove(self)
 
     def update_movement(self):
