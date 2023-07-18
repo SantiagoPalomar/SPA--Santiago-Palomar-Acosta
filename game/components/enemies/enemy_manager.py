@@ -4,15 +4,15 @@ from game.components.enemies.enemy2 import Enemy2
 
 
 class EnemyManager:
-    def __init__(self): #agrege default type
+    def __init__(self):
         self.enemies = []
 
-    def update(self):
+    def update(self, game):
         if not self.enemies:
             self.spawn_enemy()
 
-        for enemy in self.enemies:    
-            enemy.update(self.enemies)
+        for enemy in self.enemies:
+            enemy.update(game.enemy_manager.bullet_manager)
 
     def draw(self, screen):
         for enemy in self.enemies:
