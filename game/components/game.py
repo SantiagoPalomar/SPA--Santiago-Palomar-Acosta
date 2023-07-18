@@ -35,13 +35,15 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.playing = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.player.shoot(self.bullet_manager)
 
     def update(self):
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.enemy_manager.update(self)
-        self.bullet_manager.update()
-
+        self.bullet_manager.update(self)
 
     def draw(self):
         self.clock.tick(FPS)
@@ -52,7 +54,6 @@ class Game:
         self.bullet_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
-
 
     def draw_background(self):
         image = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))

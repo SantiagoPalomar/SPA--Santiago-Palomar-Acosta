@@ -3,14 +3,14 @@ import pygame
 from pygame.sprite import Sprite
 from game.components.bullets import bullet_manager
 
-from game.utils.constants import ENEMY_2, SCREEN_HEIGHT, SCREEN_WIDTH
+from game.utils.constants import BULLET_ENEMY, ENEMY_2, SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 LEFT = "left"
 RIGHT = "right"
 
 class Enemy2(Sprite):
-    X_POS_LIST = [x_pos for x_pos in range (50, SCREEN_WIDTH, 50)]
+    X_POS_LIST = [x_pos for x_pos in range(50, SCREEN_WIDTH, 50)]
     Y_POS = 20
     SPEED_X = 5
     SPEED_Y = 5
@@ -29,18 +29,13 @@ class Enemy2(Sprite):
         self.moving_index = 0
         self.shooting_time = random.randint(30, 50)
 
-    def update(self, enemies):
-        self.rect.y += self.speed_y
-        self.shoot(bullet_manager) 
+    def update(self, bullet_manager):
         if self.movement == "diagonal":
             self.update_diagonal()
         elif self.movement == "down":
             self.update_down()
 
         self.rect.y += self.speed_y
-
-        if self.rect.y >= SCREEN_HEIGHT:
-            enemies.remove(self)
 
     def update_diagonal(self):
         self.rect.x += self.speed_x
@@ -52,10 +47,11 @@ class Enemy2(Sprite):
     def update_down(self):
         self.rect.y += self.speed_y
 
-    def shoot(self):
+    def shoot(self, bullet_manager):
         current_time = pygame.time.get_ticks()
         if self.shooting_time <= current_time:
-            bullet_manager.BulletManager.add_bullet(self)
+            bullet = BULLET_ENEMY(self.rect.x + self.rect.width // 2, self.rect.y + self.rect.height)
+            bullet_manager.add_bullet(bullet)
             self.shooting_time += current_time + random.randint(30, 50)
 
     def draw(self, screen):
